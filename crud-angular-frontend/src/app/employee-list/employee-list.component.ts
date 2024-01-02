@@ -19,7 +19,6 @@ export class EmployeeListComponent implements OnInit{
 
   private getEmployees(){
     this.employeeService.getEmployeesList().subscribe(data =>{
-      debugger;
       this.employees = data;
     })
   }
