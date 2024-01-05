@@ -10,8 +10,8 @@ import { EmployeeService } from '../employee.service';
 })
 export class EmployeeDetailsComponent implements OnInit{
 
-  id : number;
-  employee : Employee;
+  id : number = null;
+  employee : Employee | null = null;
 
   constructor(private activatedRoute : ActivatedRoute,
               private employeeService : EmployeeService){}
