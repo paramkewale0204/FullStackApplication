@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.*;
 
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +23,8 @@ import com.example.demo.repository.EmployeeRepository;
 @RequestMapping("/api/v1/")
 @CrossOrigin("*")
 public class EmployeeController {
+	
+	Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
@@ -29,19 +32,21 @@ public class EmployeeController {
 	//Get all employees REST API
 	@GetMapping("/employees")
 	public List<Employee> getAllEmployee(){
-		System.out.println("Get all");
+		logger.trace("This is Get All Employee Method");
 		return employeeRepository.findAll();
 	}
 	
 	//create employee rest api
 	@PostMapping("/employees")
 	public Employee createEmployee(@RequestBody Employee employee) {
+		logger.trace("This is Create Employee method");
 		return employeeRepository.save(employee);
 	}
 	
 	// get employee by ID
 	@GetMapping("/employees/{id}")
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+		logger.trace("This is Get Employee by ID method");
 		Employee employee =  employeeRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not found with provided ID" + id));
 		
@@ -51,6 +56,7 @@ public class EmployeeController {
 	//update employee rest api
 	@PutMapping("/employees/{id}")
 	public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails){
+		logger.trace("This is Update Employee Method");
 		
 		Employee employee =  employeeRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not found with provided ID" + id));
@@ -68,6 +74,7 @@ public class EmployeeController {
 	@DeleteMapping("/employees/{id}")
 	public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id) {
 		
+		logger.trace("This is Delete Employee Method");
 		Employee employee =  employeeRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not found with provided ID" + id));
 		
